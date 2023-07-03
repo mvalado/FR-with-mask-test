@@ -81,7 +81,7 @@ def extract_features(X_train, X_test):
 
 def create_database(train_features, y_train):
     # Conecte-se ao banco de dados SQLite3 (crie o banco de dados se ele não existir)
-    conn = sqlite3.connect('content/drive/MyDrive/DAEDALUS/descriptors.db')
+    conn = sqlite3.connect('endereço_para_o_banco_de_dados_(nome do banco).db')
     c = conn.cursor()
 
     # Crie uma tabela para armazenar os vetores descritores e os rótulos correspondentes
@@ -123,7 +123,7 @@ def add_person_to_database(image_path, label, base_model):
     unmasked_person_descriptor = base_model.predict(np.expand_dims(unmasked_person_image_processed, axis=0)).reshape(1, -1)
 
     # Conecte-se ao banco de dados SQLite3
-    conn = sqlite3.connect('/content/drive/MyDrive/DAEDALUS/descriptors.db')
+    conn = sqlite3.connect('endereço_para_o_banco_de_dados_(nome do banco).db')
     c = conn.cursor()
 
     # Adicione o vetor descritor e o rótulo correspondente ao banco de dados
@@ -144,7 +144,7 @@ def recognize_face(image_path, base_model):
     masked_person_descriptor = base_model.predict(np.expand_dims(masked_person_image_processed, axis=0)).reshape(1, -1)
 
     # Conecte-se ao banco de dados SQLite3
-    conn = sqlite3.connect('/content/drive/MyDrive/DAEDALUS/descriptors.db')
+    conn = sqlite3.connect('endereço_para_o_banco_de_dados_(nome do banco).db')
     c = conn.cursor()
 
     # Recupere os vetores descritores e os rótulos correspondentes do banco de dados (converta os vetores descritores de volta em matrizes NumPy usando frombuffer)
@@ -168,7 +168,7 @@ def recognize_face(image_path, base_model):
     plt.show()
 
 # Defina o caminho para a pasta-mãe
-parent_folder = '/content/drive/MyDrive/DAEDALUS/post-processed'
+parent_folder = 'endereço_para_o_diretório_da_pasta_mãe'
 
 # Carregue as imagens da pasta-mãe
 X, y = load_images(parent_folder)
@@ -189,10 +189,10 @@ clf = train_classifier(train_features, y_train)
 evaluate_classifier(clf, test_features, y_test)
 
 # Adicione uma nova pessoa ao banco de dados
-image_path = '/content/drive/MyDrive/DAEDALUS/marcelinho_no_db.jpg'
+image_path = 'endereço_para_a_imagem_da_nova_pessoa_sem_máscara'
 label = 'marcelinho'
 add_person_to_database(image_path, label)
 
 # Reconheça a face de uma pessoa usando máscara facial
-image_path = '/content/drive/MyDrive/DAEDALUS/marcelinho_na_inferencia.jpg'
+image_path = 'endereço_para_a_imagem_da_nova_pessoa_usando_máscara'
 recognize_face(image_path)
